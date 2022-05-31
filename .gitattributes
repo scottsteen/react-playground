@@ -1,0 +1,11 @@
+# Set default behavior to automatically normalize line endings.
+* text=auto
+ 
+# Force bash scripts to always use lf line endings so that if a repo is accessed
+# in Unix via a file share from Windows, the scripts will work.
+*.sh text eol=lf
+gradlew text eol=lf
+
+# Force batch scripts to always user crlf line endings as they will be executed
+# in a Windows environment.
+*.bat text eol=crlf
