@@ -1,28 +1,7 @@
-import { fetchShows as defaultFetchShows } from './api';
-import { Shows } from './shows';
+import { getShows as defaultGetShows } from './api';
 
-let result: Shows;
-let error: Error;
-
-const useFetchShows = (fetchShows: () => Promise<Shows>) => {
-  const suspender = fetchShows()
-    .then(setResult)
-    .catch(setError);
-  return {
-    read() {
-      if (result) {
-        return result;
-      }
-      if (error) {
-        throw error;
-      }
-      throw suspender;
-    }
-  };
-};
-
-const Suspenseful = ({ fetchShows = defaultFetchShows }) => {
-  const shows = useFetchShows(fetchShows).read();
+const Suspenseful = ({ getShows = defaultGetShows }) => {
+  const shows = getShows().read();
 
   return (
     <div>
@@ -37,8 +16,5 @@ const Suspenseful = ({ fetchShows = defaultFetchShows }) => {
     </div>
   );
 };
-
-const setResult = (r: Shows) => result = r;
-const setError = (e: Error) => error = e;
 
 export default Suspenseful;
